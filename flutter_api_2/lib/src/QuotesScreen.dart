@@ -18,40 +18,47 @@ class QuotesScreen extends StatelessWidget {
       body: ListView(
         children: [
           Obx(
-            () => Center(
-              child: Text(
-                'Api took : ${userController.methodTime.value} Milliseconds',
+            () => Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Center(
+                child: Text(
+                  'Api took : ${userController.methodTime.value} Milliseconds',
+                ),
               ),
             ),
           ),
           SizedBox(
             height: 20,
           ),
+          CustomTextField(
+            controller: quotesIndex,
+            title: 'Quote Index (Empty for all)',
+          ),
+          CustomButton(
+            press: () async {
+              int? index = int.tryParse(quotesIndex.text);
+              if (index != null) {
+                await userController.FetchUsers(quoteIndex: index);
+              } else {
+                await userController.FetchUsers();
+              }
+            },
+            title: 'Search',
+          ),
+          SizedBox(
+            height: 20,
+          ),
           GetBuilder<UserController>(
             builder: (con) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
+              return SizedBox(
+                height: MediaQuery.of(context).size.height / 1.5,
+                child: ListView(
+                  shrinkWrap: true,
                   children: [
-                    CustomTextField(
-                      controller: quotesIndex,
-                      title: 'Quote Index (Empty for all)',
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Text(userController.QuotesData.toString()),
                     ),
-                    CustomButton(
-                      press: () async {
-                        int? index = int.tryParse(quotesIndex.text);
-                        if (index != null) {
-                          await userController.FetchUsers(quoteIndex: index);
-                        } else {
-                          await userController.FetchUsers();
-                        }
-                      },
-                      title: 'Search',
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(userController.QuotesData.toString()),
                   ],
                 ),
               );
