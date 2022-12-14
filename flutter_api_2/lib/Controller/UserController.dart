@@ -17,10 +17,10 @@ class UserController extends GetxController {
     time.start();
 
     if (quoteIndex == null) {
-      List result = await ClassApi.MethodGet(
+      var result = await ClassApi.MethodGet(
         endPoint: EndPoint.quotes(quotesIndex: quoteIndex),
       );
-      result.forEach((element) {
+      result['quotes'].forEach((element) {
         QuotesData.add(Quotes.fromJson(element));
       });
     } else {

@@ -20,7 +20,7 @@ class QuotesScreen extends StatelessWidget {
           Obx(
             () => Center(
               child: Text(
-                'Api took ${userController.methodTime.value} Milliseconds',
+                'Api took : ${userController.methodTime.value} Milliseconds',
               ),
             ),
           ),

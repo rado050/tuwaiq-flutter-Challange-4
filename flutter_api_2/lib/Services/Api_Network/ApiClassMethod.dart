@@ -12,7 +12,7 @@ abstract class ClassApi {
       var response = await http.get(url);
       var jsonData = json.decode(response.body);
       if (response.statusCode == 200) {
-        return jsonData['quotes'];
+        return jsonData;
       } else {
         return "No User";
       }
